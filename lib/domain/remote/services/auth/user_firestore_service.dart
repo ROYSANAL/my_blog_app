@@ -28,7 +28,7 @@ class UserFireStoreService implements BaseFireStoreService<UserModel> {
   @override
   Resource<Stream<QuerySnapshot<UserModel>>> getAllObjects(params) {
     try {
-      final res =  _userCollection.snapshots();
+      final res = _userCollection.snapshots();
       return Success(res);
     } on FirebaseException catch (e) {
       return Failure(e.message.toString());
@@ -54,6 +54,16 @@ class UserFireStoreService implements BaseFireStoreService<UserModel> {
     try {
       await _userCollection.doc(data.uid).set(data);
       return Success(data);
+    } on FirebaseException catch (e) {
+      return Failure(e.message.toString());
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
+
+  Resource<Stream<DocumentSnapshot<UserModel>>> getUserStream(String uid) {
+    try {
+      return Success(_userCollection.doc(uid).snapshots());
     } on FirebaseException catch (e) {
       return Failure(e.message.toString());
     } catch (e) {

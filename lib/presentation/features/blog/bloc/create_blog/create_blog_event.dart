@@ -13,10 +13,3 @@ class PostButtonClicked extends CreateBlogEvent {
   PostButtonClicked(this.form);
 }
 
-class EditButtonClicked extends CreateBlogEvent {
-  final Json data;
-  final String id;
-  final XFile? image;
-
-  EditButtonClicked({required this.data, required this.id, this.image});
-}

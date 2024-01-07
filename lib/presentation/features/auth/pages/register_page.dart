@@ -5,6 +5,10 @@ import 'package:my_blog_app/core/widgets/show_password_text_field.dart';
 import 'package:my_blog_app/core/widgets/simple_snack_bar.dart';
 import 'package:my_blog_app/domain/remote/models/auth/sign_up_form.dart';
 import 'package:my_blog_app/presentation/features/auth/bloc/register/register_bloc.dart';
+import 'package:my_blog_app/presentation/features/blog/bloc/create_blog/create_blog_bloc.dart';
+import 'package:my_blog_app/presentation/features/blog/bloc/my_blogs/my_blogs_bloc.dart';
+import 'package:my_blog_app/presentation/features/profile/bloc/profile_bloc.dart';
+import 'package:my_blog_app/presentation/main/main_screen.dart';
 
 import '../../../../core/res/svgs.dart';
 
@@ -41,6 +45,27 @@ class _RegisterPageState extends State<RegisterPage> {
                   SimpleSnackBar.show(context, state.error);
                 } else if (state is RegisteredSuccessFully) {
                   SimpleSnackBar.show(context, "Registered Successfully");
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MultiBlocProvider(
+                                  providers: [
+                                    BlocProvider(
+                                      create: (context) =>
+                                          MyBlogsBloc(state.userModel.uid),
+                                    ),
+                                    BlocProvider(
+                                      create: (context) => CreateBlogBloc(),
+                                    ),
+                                    BlocProvider(
+                                      create: (context) =>
+                                          ProfileBloc(state.userModel.uid),
+                                    ),
+                                  ],
+                                  child: MainScreen(
+                                    user: state.userModel,
+                                  ))),
+                      (route) => false);
                 }
               },
               builder: (context, state) {

@@ -33,4 +33,3 @@ class BlogPostError extends CreateBlogState {
   BlogPostError(this.error);
 }
 
-class BlogUpdating extends CreateBlogEvent {}

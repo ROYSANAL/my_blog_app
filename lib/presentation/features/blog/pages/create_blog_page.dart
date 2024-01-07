@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_blog_app/core/widgets/simple_loader_dialog.dart';
 import 'package:my_blog_app/core/widgets/simple_snack_bar.dart';
 import 'package:my_blog_app/domain/remote/models/auth/user_model.dart';
 import 'package:my_blog_app/domain/remote/models/blogs/create_blog_form.dart';
@@ -34,10 +35,15 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
     return Scaffold(
       floatingActionButton: BlocConsumer<CreateBlogBloc, CreateBlogState>(
         listener: (context, state) {
+          if (state is BlogPosting) {
+            SimpleLoaderDialog.show(context, "Posting Blog");
+          }
           if (state is BlogPostedSuccessfully) {
+            Navigator.of(context).pop(); // remove the dialog
             SimpleSnackBar.show(context, "blog posted");
           }
           if (state is BlogPostError) {
+            Navigator.of(context).pop(); // remove the dialog
             SimpleSnackBar.show(context, state.error);
           }
           if (state is BlogFormInvalid) {

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_blog_app/core/widgets/simple_loader_dialog.dart';
+import 'package:my_blog_app/core/widgets/simple_snack_bar.dart';
 import 'package:my_blog_app/domain/remote/models/auth/user_model.dart';
 import 'package:my_blog_app/domain/remote/models/blogs/blog_model.dart';
-import 'package:my_blog_app/domain/remote/models/blogs/create_blog_form.dart';
-import 'package:my_blog_app/presentation/features/blog/bloc/create_blog/create_blog_bloc.dart';
+import 'package:my_blog_app/presentation/features/blog/bloc/edit_blog/edit_blog_bloc.dart';
 import 'package:my_blog_app/presentation/features/blog/widget/image_selector.dart';
 
 class EditBlogPage extends StatefulWidget {
@@ -34,21 +35,34 @@ class _EditBlogPageState extends State<EditBlogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: BlocConsumer<CreateBlogBloc, CreateBlogState>(
-        listener: (context, state) {},
+      floatingActionButton: BlocConsumer<EditBlogBloc, EditBlogState>(
+        listener: (context, state) {
+          if (state is EditingBlog) {
+            SimpleLoaderDialog.show(context, "Updating Blog");
+          } else if (state is BlogEditedSuccessfully) {
+            Navigator.of(context)
+              ..pop()
+              ..pop(); // remove the dialog and read page
+            SimpleSnackBar.show(context, "blog updated");
+          } else if (state is BlogEditFailed) {
+            Navigator.of(context).pop(); // remove dialog
+            SimpleSnackBar.show(context, state.error);
+          } else if (state is EditBlogFormInvalid) {
+            SimpleSnackBar.show(context, state.error);
+          }
+        },
         builder: (context, state) {
           return MaterialButton(
-            onPressed: (state is BlogPosting)
+            onPressed: (state is EditingBlog)
                 ? null
                 : () {
-                    final form = CreateBlogForm(
-                      title: title.value.text.trim(),
-                      body: body.value.text.trim(),
-                      image: image,
-                      authorId: widget.user.uid,
-                      authorName: widget.user.name,
-                    );
-                    context.read<CreateBlogBloc>().add(PostButtonClicked(form));
+                    context.read<EditBlogBloc>().add(EditButtonClicked(
+                          changedTitle: title.value.text.trim(),
+                          changedBody: body.value.text.trim(),
+                          oldBlog: widget.blog,
+                          image: image,
+                          id: widget.blog.id,
+                        ));
                   },
             disabledColor: Colors.grey,
             color: Colors.deepOrange,
@@ -92,7 +106,7 @@ class _EditBlogPageState extends State<EditBlogPage> {
                   height: 20,
                 ),
                 ImageSelector(
-                  url: widget.blog == null ? null : widget.blog!.imageUrl,
+                  url: widget.blog.imageUrl,
                   onImageSelected: (p0) {
                     image = p0;
                   },

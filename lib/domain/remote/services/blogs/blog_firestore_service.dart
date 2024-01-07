@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_blog_app/core/class/resource.dart';
 import 'package:my_blog_app/core/interface/base_firestore_service.dart';
+import 'package:my_blog_app/domain/remote/models/auth/user_model.dart';
 import 'package:my_blog_app/domain/remote/models/blogs/blog_model.dart';
 
 typedef Json = Map<String, dynamic>;
@@ -13,10 +14,21 @@ class BlogFireStoreService implements BaseFireStoreService<BlogModel> {
             toFirestore: (value, options) => value.toJson(),
           );
 
+  final _userCollection =
+      FirebaseFirestore.instance.collection("users").withConverter<UserModel>(
+            fromFirestore: (snapshot, options) =>
+                UserModel.fromJson(snapshot.data()!),
+            toFirestore: (value, options) => value.toJson(),
+          );
+
   @override
   Future<Resource<BlogModel>> deleteObject(BlogModel data) async {
     try {
-      await _blogCollection.doc(data.id).delete();
+      final batch = FirebaseFirestore.instance.batch();
+      batch.delete(_blogCollection.doc(data.id));
+      batch.update(_userCollection.doc(data.authorId),
+          {"blogsPublished": FieldValue.increment(-1)});
+      batch.commit();
       return Success(data);
     } on FirebaseException catch (e) {
       return Failure(e.message.toString());
@@ -52,7 +64,11 @@ class BlogFireStoreService implements BaseFireStoreService<BlogModel> {
   @override
   Future<Resource<BlogModel>> insertObject(BlogModel data) async {
     try {
-      await _blogCollection.doc(data.id).set(data);
+      final batch = FirebaseFirestore.instance.batch();
+      batch.set(_blogCollection.doc(data.id), data);
+      batch.update(_userCollection.doc(data.authorId),
+          {"blogsPosted": FieldValue.increment(1)});
+      await batch.commit();
       return Success(data);
     } on FirebaseException catch (e) {
       return Failure(e.message.toString());

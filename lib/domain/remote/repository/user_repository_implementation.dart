@@ -36,7 +36,10 @@ class UserRepositoryImplementation implements UserRepository {
       _auth.loginUsingEmailAndPassword(email, password);
 
   @override
-  Future<Resource<DocumentSnapshot<UserEntity>>> getUserData(String uid) => _ffs.getObject(uid);
+  Future<Resource<DocumentSnapshot<UserEntity>>> getUserData(String uid) =>
+      _ffs.getObject(uid);
 
-
+  @override
+  Resource<Stream<DocumentSnapshot<UserEntity>>> getUserStream(String uid) =>
+      _ffs.getUserStream(uid);
 }

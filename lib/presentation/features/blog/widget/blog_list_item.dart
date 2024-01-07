@@ -20,11 +20,14 @@ class BlogListItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(20)),
-              child: Image.network(
-                blog.imageUrl,
-                width: 80,
-                height: 80,
-                fit: BoxFit.fill,
+              child: Hero(
+                tag: "img+${blog.id}",
+                child: Image.network(
+                  blog.imageUrl,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             const SizedBox(
@@ -58,7 +61,7 @@ class BlogListItem extends StatelessWidget {
   }
 }
 
-extension on DateTime {
+extension CustomDate on DateTime {
   String toFormattedString() {
     final formatter = DateFormat("dd MMM , yyyy");
     return formatter.format(this);

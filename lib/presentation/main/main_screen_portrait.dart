@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_blog_app/domain/remote/models/auth/user_model.dart';
 import 'package:my_blog_app/presentation/features/blog/pages/blog_page.dart';
 import 'package:my_blog_app/presentation/features/blog/pages/create_blog_page.dart';
+import 'package:my_blog_app/presentation/features/profile/page/profile_page.dart';
 
 class MainScreenPortrait extends StatefulWidget {
   final UserModel user;
@@ -27,13 +28,20 @@ class _MainScreenPortraitState extends State<MainScreenPortrait> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined), label: "home"),
+                icon: Icon(Icons.messenger_outline),
+                label: "blogs",
+                activeIcon: Icon(Icons.messenger)),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined), label: "home"),
+                icon: Icon(Icons.edit_outlined),
+                label: "Create",
+                activeIcon: Icon(Icons.edit)),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined), label: "home"),
+                icon: Icon(Icons.person_outline_outlined),
+                label: "Profile",
+                activeIcon: Icon(Icons.person)),
           ],
           selectedItemColor: Colors.deepOrange,
           onTap: (e) {
@@ -49,19 +57,21 @@ class _MainScreenPortraitState extends State<MainScreenPortrait> {
         body: SafeArea(
           child: PageView.builder(
             itemBuilder: (context, index) {
-              if (index == 0) {
-                return BlogPage(
-                  user: widget.user,
-                );
-              }
-              if (index == 1) {
-                return CreateBlogPage(
-                  user: widget.user,
-                );
+              switch (index) {
+                case 0:
+                  return BlogPage(user: widget.user);
+                case 1:
+                  return CreateBlogPage(user: widget.user);
+                case 2:
+                  return ProfilePage(
+                    user: widget.user,
+                  );
+                default:
+                  return BlogPage(user: widget.user);
               }
             },
             controller: pageController,
-            itemCount: 2,
+            itemCount: 3,
             physics: const NeverScrollableScrollPhysics(),
           ),
         ));

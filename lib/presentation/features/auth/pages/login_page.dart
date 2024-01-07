@@ -9,6 +9,7 @@ import 'package:my_blog_app/presentation/features/auth/bloc/register/register_bl
 import 'package:my_blog_app/presentation/features/auth/pages/register_page.dart';
 import 'package:my_blog_app/presentation/features/blog/bloc/create_blog/create_blog_bloc.dart';
 import 'package:my_blog_app/presentation/features/blog/bloc/my_blogs/my_blogs_bloc.dart';
+import 'package:my_blog_app/presentation/features/profile/bloc/profile_bloc.dart';
 import 'package:my_blog_app/presentation/main/main_screen.dart';
 
 import '../bloc/login/login_bloc.dart';
@@ -55,6 +56,10 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     BlocProvider(
                                       create: (context) => CreateBlogBloc(),
+                                    ),
+                                    BlocProvider(
+                                      create: (context) =>
+                                          ProfileBloc(state.user.uid),
                                     ),
                                   ],
                                   child: MainScreen(

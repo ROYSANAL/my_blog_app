@@ -6,9 +6,8 @@ import 'package:my_blog_app/core/widgets/simple_snack_bar.dart';
 import 'package:my_blog_app/domain/remote/models/auth/user_model.dart';
 import 'package:my_blog_app/domain/remote/models/blogs/blog_model.dart';
 import 'package:my_blog_app/domain/remote/models/blogs/option.dart';
-import 'package:my_blog_app/presentation/features/blog/bloc/create_blog/create_blog_bloc.dart';
+import 'package:my_blog_app/presentation/features/blog/bloc/edit_blog/edit_blog_bloc.dart';
 import 'package:my_blog_app/presentation/features/blog/bloc/read_blog_bloc/read_blog_bloc.dart';
-import 'package:my_blog_app/presentation/features/blog/pages/create_blog_page.dart';
 import 'package:my_blog_app/presentation/features/blog/pages/edit_blog_page.dart';
 import 'package:my_blog_app/presentation/features/blog/widget/data_chip.dart';
 
@@ -80,8 +79,8 @@ class _ReadBlogPageState extends State<ReadBlogPage> {
               SimpleSnackBar.show(context, state.error);
             } else if (state is GoToEditBlog) {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => BlocProvider<CreateBlogBloc>(
-                        create: (context) => CreateBlogBloc(),
+                  builder: (_) => BlocProvider<EditBlogBloc>(
+                        create: (context) => EditBlogBloc(),
                         child:
                             EditBlogPage(user: widget.user, blog: state.blog),
                       )));
@@ -132,11 +131,14 @@ class _ReadBlogPageState extends State<ReadBlogPage> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(20)),
-                        child: Image.network(
-                          widget.blog.imageUrl,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.fitHeight,
+                        child: Hero(
+                          tag: "img+${widget.blog.id}",
+                          child: Image.network(
+                            widget.blog.imageUrl,
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.fitHeight,
+                          ),
                         ),
                       ),
                     ),

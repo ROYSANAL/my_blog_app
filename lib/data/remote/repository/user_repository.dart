@@ -20,4 +20,6 @@ abstract class UserRepository {
 
   Future<Resource<UserCredential>> createUserWithEmail(
       String email, String password);
+
+  Resource<Stream<DocumentSnapshot<UserEntity>>> getUserStream(String uid);
 }
