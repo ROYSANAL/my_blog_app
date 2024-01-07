@@ -27,9 +27,9 @@ class _EditBlogPageState extends State<EditBlogPage> {
   void initState() {
     super.initState();
     image = null;
-    title = TextEditingController(text: widget.blog.title);
+    title = TextEditingController(text: widget.blog.title);                                         // already filled
 
-    body = TextEditingController(text: widget.blog.body);
+    body = TextEditingController(text: widget.blog.body);                                           // already filled
   }
 
   @override
@@ -42,10 +42,10 @@ class _EditBlogPageState extends State<EditBlogPage> {
           } else if (state is BlogEditedSuccessfully) {
             Navigator.of(context)
               ..pop()
-              ..pop(); // remove the dialog and read page
+              ..pop();                                                                                      // remove the dialog and read page
             SimpleSnackBar.show(context, "blog updated");
           } else if (state is BlogEditFailed) {
-            Navigator.of(context).pop(); // remove dialog
+            Navigator.of(context).pop();                                                                            // remove dialog
             SimpleSnackBar.show(context, state.error);
           } else if (state is EditBlogFormInvalid) {
             SimpleSnackBar.show(context, state.error);
@@ -53,10 +53,10 @@ class _EditBlogPageState extends State<EditBlogPage> {
         },
         builder: (context, state) {
           return MaterialButton(
-            onPressed: (state is EditingBlog)
+            onPressed: (state is EditingBlog)                                                                    // disable when updating
                 ? null
                 : () {
-                    context.read<EditBlogBloc>().add(EditButtonClicked(
+                    context.read<EditBlogBloc>().add(EditButtonClicked(                                               // trigger edit
                           changedTitle: title.value.text.trim(),
                           changedBody: body.value.text.trim(),
                           oldBlog: widget.blog,

@@ -22,16 +22,16 @@ class ReadBlogPage extends StatefulWidget {
 }
 
 class _ReadBlogPageState extends State<ReadBlogPage> {
-  late List<Option> options;
+  late List<Option> options;                                                                     // list of option for pop-up menu
 
   @override
   void initState() {
     super.initState();
     options = [
-      Option(icon: Icons.delete_outline, text: "delete", () {
+      Option(icon: Icons.delete_outline, text: "delete", () {                                  // trigger delete on tap
         context.read<ReadBlogBloc>().add(DeleteBlogClicked(widget.blog));
       }),
-      Option(icon: Icons.edit_outlined, text: "edit", () {
+      Option(icon: Icons.edit_outlined, text: "edit", () {                                     // trigger edit on tap
         context.read<ReadBlogBloc>().add(EditBlogClicked(widget.blog));
       }),
     ];
@@ -82,7 +82,7 @@ class _ReadBlogPageState extends State<ReadBlogPage> {
                   builder: (_) => BlocProvider<EditBlogBloc>(
                         create: (context) => EditBlogBloc(),
                         child:
-                            EditBlogPage(user: widget.user, blog: state.blog),
+                            EditBlogPage(user: widget.user, blog: state.blog),                             // to edit page
                       )));
             }
           },

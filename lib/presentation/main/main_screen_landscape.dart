@@ -30,7 +30,7 @@ class _MainScreenLandScapeState extends State<MainScreenLandScape> {
       body: SafeArea(
         child: Row(
           children: [
-            NavigationRail(
+            NavigationRail(                                                                     // using navigation rail for landscape
               destinations: const [
                 NavigationRailDestination(
                     icon: Icon(Icons.messenger_outline), label: Text("blogs")),
@@ -54,7 +54,7 @@ class _MainScreenLandScapeState extends State<MainScreenLandScape> {
                 child: PageView.builder(
               itemCount: 3,
               controller: pageController,
-              physics: const NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),                                      // non scrollable page view
               itemBuilder: (context, index) {
                 switch (index) {
                   case 0:

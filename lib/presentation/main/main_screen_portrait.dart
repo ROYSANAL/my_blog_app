@@ -34,7 +34,7 @@ class _MainScreenPortraitState extends State<MainScreenPortrait> {
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Theme(
               data: Theme.of(context).copyWith(splashColor: Colors.transparent),
-              child: BottomNavigationBar(
+              child: BottomNavigationBar(                                                         //       nav bar in portrait
                 backgroundColor: Colors.transparent,
                 selectedLabelStyle:
                     const TextStyle(fontWeight: FontWeight.w500),
@@ -76,7 +76,7 @@ class _MainScreenPortraitState extends State<MainScreenPortrait> {
             },
             controller: pageController,
             itemCount: 3,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),                                                  // not scrollable page view
           ),
         ));
   }

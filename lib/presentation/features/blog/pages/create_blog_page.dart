@@ -39,11 +39,11 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
             SimpleLoaderDialog.show(context, "Posting Blog");
           }
           if (state is BlogPostedSuccessfully) {
-            Navigator.of(context).pop(); // remove the dialog
+            Navigator.of(context).pop();                                                                            // remove the dialog
             SimpleSnackBar.show(context, "blog posted");
           }
           if (state is BlogPostError) {
-            Navigator.of(context).pop(); // remove the dialog
+            Navigator.of(context).pop();                                                                                  // remove the dialog
             SimpleSnackBar.show(context, state.error);
           }
           if (state is BlogFormInvalid) {
@@ -52,7 +52,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
         },
         builder: (context, state) {
           return MaterialButton(
-            onPressed: (state is BlogPosting)
+            onPressed: (state is BlogPosting)                                                            // disable when posting
                 ? null
                 : () {
                     final form = CreateBlogForm(
@@ -62,7 +62,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                       authorId: widget.user.uid,
                       authorName: widget.user.name,
                     );
-                    context.read<CreateBlogBloc>().add(PostButtonClicked(form));
+                    context.read<CreateBlogBloc>().add(PostButtonClicked(form));                               // trigger post event
                   },
             disabledColor: Colors.grey,
             color: Colors.deepOrange,

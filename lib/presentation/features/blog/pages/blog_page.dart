@@ -31,10 +31,10 @@ class _BlogPageState extends State<BlogPage> {
               if (state is BlogsLoaded) {
                 if (state.blogList.isEmpty) {
                   return const Center(
-                    child: Text("no blogs"),
+                    child: Text("no blogs"),                                                  // when 0 blogs
                   );
                 }
-                return ListView.builder(
+                return ListView.builder(                                                      // when blogs != 0
                     itemCount: state.blogList.length,
                     itemBuilder: (context, index) {
                       final item = state.blogList[index];
@@ -44,15 +44,15 @@ class _BlogPageState extends State<BlogPage> {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (_) => BlocProvider<ReadBlogBloc>(
                                     create: (context) => ReadBlogBloc(),
-                                    child: ReadBlogPage(blog: item ,user: widget.user,),
+                                    child: ReadBlogPage(blog: item ,user: widget.user,),                   // to read blogs page
                                   )));
                         },
                       );
                     });
               } else if (state is BlogLoadingError) {
-                return Text(state.error);
+                return Text(state.error);                                                                 // show error
               } else {
-                return const Center(
+                return const Center(                                                                      // show loading
                   child: SizedBox(
                     width: 100,
                     height: 100,

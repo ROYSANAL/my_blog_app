@@ -17,8 +17,8 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Responsive(
-      portrait: MainScreenPortrait(user: widget.user,),
-      landscape: MainScreenLandScape(user : widget.user),
+      portrait: MainScreenPortrait(user: widget.user,),                      // for portrait
+      landscape: MainScreenLandScape(user : widget.user),                    // for landscape
     );
   }
 
