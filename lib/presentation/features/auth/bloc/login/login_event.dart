@@ -8,3 +8,9 @@ class LoginButtonClicked extends LoginEvent {
 
   LoginButtonClicked(this.form);
 }
+
+class AlreadyLoggedIn extends LoginEvent {
+  final String uid;
+
+  AlreadyLoggedIn(this.uid);
+}

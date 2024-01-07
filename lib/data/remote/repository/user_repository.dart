@@ -22,4 +22,6 @@ abstract class UserRepository {
       String email, String password);
 
   Resource<Stream<DocumentSnapshot<UserEntity>>> getUserStream(String uid);
+
+  Future<Resource<String>> logoutUser();
 }

@@ -16,3 +16,12 @@ class UserError extends ProfileState {
 
   UserError(this.error);
 }
+
+class LogoutError extends ProfileState {
+  final String error;
+
+  LogoutError(this.error);
+}
+
+class LogoutSuccessful extends ProfileState {}
+class LoggingOut extends ProfileState {}

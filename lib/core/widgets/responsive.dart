@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// different page for different screen size  - Responsive
 class Responsive extends StatelessWidget {
   final Widget portrait;
   final Widget landscape;

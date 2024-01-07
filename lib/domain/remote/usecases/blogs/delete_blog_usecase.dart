@@ -8,7 +8,7 @@ class DeleteBlogUseCase {
   DeleteBlogUseCase(this._blogRepo);
 
   Future<Resource<BlogModel>> call(BlogModel blogModel) async {
-    final res = await _blogRepo.deleteBlogData(blogModel);
-    return res.transform<BlogModel>((p0) => BlogModel.fromEntity(p0));
+    final res = await _blogRepo.deleteBlogData(blogModel);                               // delete the blog document
+    return res.transform<BlogModel>((p0) => BlogModel.fromEntity(p0));                  // convert blog entity to model
   }
 }

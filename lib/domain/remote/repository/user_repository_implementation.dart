@@ -42,4 +42,7 @@ class UserRepositoryImplementation implements UserRepository {
   @override
   Resource<Stream<DocumentSnapshot<UserEntity>>> getUserStream(String uid) =>
       _ffs.getUserStream(uid);
+
+  @override
+  Future<Resource<String>> logoutUser() => _auth.logOutUser();
 }

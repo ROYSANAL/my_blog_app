@@ -17,13 +17,14 @@ class DataRowWidget extends StatelessWidget {
         children: [
           Icon(
             icon,
+            color: Colors.deepOrange.withOpacity(0.7),
           ),
           const SizedBox(
             width: 8,
           ),
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.w500 ,fontSize: 13),
+            style: const TextStyle(fontWeight: FontWeight.w500 ,fontSize: 13 ),
           ),
           Expanded(
             child: Text(

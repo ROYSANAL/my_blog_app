@@ -11,10 +11,11 @@ class RegisterUserUseCase {
   RegisterUserUseCase(this._userRepo);
 
   Future<Resource<UserModel>> call(SignUpForm form) async {
-    final res = await _userRepo.createUserWithEmail(form.email, form.password);
+    final res = await _userRepo.createUserWithEmail(form.email, form.password);                 // create new user
     if (res is Success<UserCredential>) {
       final user = res.data.user!;
-      final data = await _userRepo.addUserData(UserEntity(
+
+      final data = await _userRepo.addUserData(UserEntity(                                       // save user data if registered successfully
         name: form.name,
         email: form.email,
         uid: user.uid,
@@ -23,7 +24,7 @@ class RegisterUserUseCase {
       ));
 
       if (data is Success<UserEntity>) {
-        return Success(UserModel.fromUserEntity(data.data));
+        return Success(UserModel.fromUserEntity(data.data));                                   // return user data
       } else {
         return Failure(data.error!);
       }

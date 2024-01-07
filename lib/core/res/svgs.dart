@@ -1,3 +1,5 @@
+
+// esy access of svgs
 class Svgs{
   static const login = "lib/assets/svg/login.svg";
   static const signup = "lib/assets/svg/signup.svg";

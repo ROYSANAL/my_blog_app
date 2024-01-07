@@ -6,17 +6,17 @@ class UpdateBlogWithImageUseCase {
   final _blogRepo = BlogRepositoryImplementation();
 
   Future<Resource<Json>> call(Json data, XFile image, String id) async {
-    final res = await _blogRepo.deleteImage(id);
+    final res = await _blogRepo.deleteImage(id);                                         // delete previous image
     if (res is Success<String>) {
-      final url = await _blogRepo.uploadImage(id, image);
+      final url = await _blogRepo.uploadImage(id, image);                                   // upload the new image in storage
       if (url is Success<String>) {
         data = {
           ...data,
           "imageUrl": url.data,
-        };
-        final res = await _blogRepo.updateBlogData(data, id);
+        };                                                                                       // append the url in changed "data"
+        final res = await _blogRepo.updateBlogData(data, id);                                      // update the document in db
         if (res is Success<Json>) {
-          return Success(data);
+          return Success(data);                                                                  // return "data" if updated successfully
         } else {
           return Failure(res.error.toString());
         }

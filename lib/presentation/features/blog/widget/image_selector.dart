@@ -70,7 +70,7 @@ class _ImageSelectorState extends State<ImageSelector> {
                       ),
                       child: Image.network(
                         widget.url!,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fitHeight,
                       ))
               : ClipRRect(
                   borderRadius: const BorderRadius.all(
@@ -78,7 +78,7 @@ class _ImageSelectorState extends State<ImageSelector> {
                   ),
                   child: Image.file(
                     File(image!.path),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.fitHeight,
                   ))),
     );
   }

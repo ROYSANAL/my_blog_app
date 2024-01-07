@@ -8,5 +8,5 @@ class GetAllUserBlogsUseCase {
 
   GetAllUserBlogsUseCase(this._blogRepo);
 
-  Resource<Stream<QuerySnapshot<BlogEntity>>> call(String uid) => _blogRepo.getAllBlogsByUser(uid);
+  Resource<Stream<QuerySnapshot<BlogEntity>>> call(String uid) => _blogRepo.getAllBlogsByUser(uid);   // get realtime  (stream) of documents from db
 }

@@ -9,5 +9,5 @@ class GetUserDataUseCase {
   GetUserDataUseCase(this._repo);
 
   Resource<Stream<DocumentSnapshot<UserEntity>>> call(String uid) =>
-      _repo.getUserStream(uid);
+      _repo.getUserStream(uid);                                                           // get real time user data
 }

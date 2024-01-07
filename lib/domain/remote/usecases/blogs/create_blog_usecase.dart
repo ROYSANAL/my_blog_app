@@ -9,7 +9,7 @@ class CreateBlogUseCase {
   CreateBlogUseCase(this._blogRepo);
 
   Future<Resource<BlogModel>> call(CreateBlogForm form, String id) async {
-    final url = await _blogRepo.uploadImage(id, form.image!);
+    final url = await _blogRepo.uploadImage(id, form.image!);                          // upload image to storage
     if (url is Success<String>) {
       final blogModel = BlogModel(
           id: id,
@@ -19,10 +19,10 @@ class CreateBlogUseCase {
           authorName: form.authorName,
           imageUrl: url.data,
           publishDate: DateTime.now());
-      final res = await _blogRepo.addBlogData(blogModel);
+      final res = await _blogRepo.addBlogData(blogModel);                                    // store the blog data in database
       return res.transform<BlogModel>(
         (p0) => BlogModel.fromEntity(p0),
-      );
+      );                                                                                      // convert user entity to model and return
     } else {
       return Failure(url.error!);
     }

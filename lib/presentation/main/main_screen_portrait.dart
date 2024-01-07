@@ -27,48 +27,52 @@ class _MainScreenPortraitState extends State<MainScreenPortrait> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.messenger_outline),
-                label: "blogs",
-                activeIcon: Icon(Icons.messenger)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.edit_outlined),
-                label: "Create",
-                activeIcon: Icon(Icons.edit)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline_outlined),
-                label: "Profile",
-                activeIcon: Icon(Icons.person)),
-          ],
-          selectedItemColor: Colors.deepOrange,
-          onTap: (e) {
-            setState(() {
-              page = e;
-            });
-            pageController.animateToPage(e,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.ease);
-          },
-          currentIndex: page,
+        bottomNavigationBar: Material(
+          elevation: 1,
+          child: Container(
+            color: Colors.grey.withOpacity(0.05),
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Theme(
+              data: Theme.of(context).copyWith(splashColor: Colors.transparent),
+              child: BottomNavigationBar(
+                backgroundColor: Colors.transparent,
+                selectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w500),
+                elevation: 0,
+                items: const [
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.messenger_outline),
+                      label: "blogs",
+                      activeIcon: Icon(Icons.messenger)),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.edit_outlined),
+                      label: "create",
+                      activeIcon: Icon(Icons.edit)),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.person_outline_outlined),
+                      label: "Profile",
+                      activeIcon: Icon(Icons.person)),
+                ],
+                selectedItemColor: Colors.deepOrange,
+                onTap: (e) {
+                  setState(() {
+                    page = e;
+                  });
+                  pageController.animateToPage(e,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease);
+                },
+                currentIndex: page,
+              ),
+            ),
+          ),
         ),
         body: SafeArea(
           child: PageView.builder(
             itemBuilder: (context, index) {
-              switch (index) {
-                case 0:
-                  return BlogPage(user: widget.user);
-                case 1:
-                  return CreateBlogPage(user: widget.user);
-                case 2:
-                  return ProfilePage(
-                    user: widget.user,
-                  );
-                default:
-                  return BlogPage(user: widget.user);
-              }
+              if(index==0) return BlogPage(user: widget.user);
+              if(index==1) return CreateBlogPage(user: widget.user);
+              if(index==2) return ProfilePage(user: widget.user);
             },
             controller: pageController,
             itemCount: 3,

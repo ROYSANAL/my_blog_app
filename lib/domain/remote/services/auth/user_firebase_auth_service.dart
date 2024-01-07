@@ -32,4 +32,16 @@ class UserFireBaseAuthService implements BaseFireBaseAuthService {
       return Failure(e.toString());
     }
   }
+
+  @override
+  Future<Resource<String>> logOutUser() async {
+    try {
+      await _mAuth.signOut();
+      return Success("logout");
+    } on FirebaseAuthException catch (e) {
+      return Failure(e.message.toString());
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
 }

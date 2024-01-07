@@ -20,3 +20,6 @@ class UserDataError extends ProfileEvent {
 
   UserDataError(this.error);
 }
+
+class LogOutButtonClicked extends ProfileEvent{}
+

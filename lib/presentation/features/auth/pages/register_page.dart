@@ -45,6 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   SimpleSnackBar.show(context, state.error);
                 } else if (state is RegisteredSuccessFully) {
                   SimpleSnackBar.show(context, "Registered Successfully");
+                  email.clear();
+                  password.clear();
+                  name.clear();
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
@@ -121,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             state.error,
                             style: const TextStyle(color: Colors.red),
                           )
-                        : const SizedBox.shrink(),
+                        : const SizedBox.shrink(), // show only when error
                     const SizedBox(
                       height: 20,
                     ),
@@ -129,18 +132,19 @@ class _RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: MaterialButton(
                         disabledColor: Colors.grey,
-                        onPressed: state is RegisterLoading
-                            ? null
-                            : () {
-                                final form = SignUpForm(
-                                  email: email.value.text.trim(),
-                                  name: name.value.text.trim(),
-                                  password: password.value.text.trim(),
-                                );
-                                context
-                                    .read<RegisterBloc>()
-                                    .add(RegisterButtonClicked(form));
-                              },
+                        onPressed:
+                            state is RegisterLoading //disable when loading
+                                ? null
+                                : () {
+                                    final form = SignUpForm(
+                                      email: email.value.text.trim(),
+                                      name: name.value.text.trim(),
+                                      password: password.value.text.trim(),
+                                    );
+                                    context
+                                        .read<RegisterBloc>()
+                                        .add(RegisterButtonClicked(form));
+                                  },
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         color: Colors.deepOrangeAccent,
                         shape: const RoundedRectangleBorder(
@@ -180,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         const Text("Already have an account ?"),
                         TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              Navigator.of(context).pop(); // back to login
                             },
                             child: const Text(
                               "Log In",

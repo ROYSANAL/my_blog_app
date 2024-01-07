@@ -7,5 +7,5 @@ class UpdateBlogUseCase {
   final _blogRepo = BlogRepositoryImplementation();
 
   Future<Resource<Json>> call(Json data, String blogId) =>
-      _blogRepo.updateBlogData(data, blogId);
+      _blogRepo.updateBlogData(data, blogId);                                                      // update "data" in the document in db
 }

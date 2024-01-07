@@ -44,6 +44,8 @@ class _LoginPageState extends State<LoginPage> {
                 if (state is LoginError) {
                   SimpleSnackBar.show(context, state.error);
                 } else if (state is LoggedInSuccessfully) {
+                  email.clear();
+                  password.clear();
                   SimpleSnackBar.show(context, "logged in");
                   Navigator.pushAndRemoveUntil(
                       context,
@@ -65,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: MainScreen(
                                     user: state.user,
                                   ))),
-                      (route) => true);
+                      (route) => false);
                 }
               },
               builder: (context, state) {

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+
+// text field with show password button
+
 class ShowPasswordTextField extends StatefulWidget {
   final String hint;
   final TextEditingController controller;
@@ -24,7 +27,7 @@ class _ShowPasswordTextFieldState extends State<ShowPasswordTextField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      obscureText: showPassword,
+      obscureText: showPassword, // show password
       style: const TextStyle(fontSize: 14),
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.lock_outline),

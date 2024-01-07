@@ -8,4 +8,6 @@ abstract class BaseFireBaseAuthService {
 
   Future<Resource<UserCredential>> registerUsingEmailAndPassword(
       String email, String password);
+
+  Future<Resource> logOutUser();
 }

@@ -12,13 +12,13 @@ class LoginUserUseCase {
   LoginUserUseCase(this._userRepo);
 
   Future<Resource<UserModel>> call(LoginForm form) async {
-    final res = await _userRepo.loginUserWithEmail(form.email, form.password);
+    final res = await _userRepo.loginUserWithEmail(form.email, form.password);  // login the user
     if (res is Success<UserCredential>) {
-      final data = await _userRepo.getUserData(res.data.user!.uid);
+      final data = await _userRepo.getUserData(res.data.user!.uid);              // get data from firestore if logged in
       if (data is Success<DocumentSnapshot<UserEntity>>) {
-        return Success(UserModel.fromUserEntity(data.data.data()!));
+        return Success(UserModel.fromUserEntity(data.data.data()!));             // return the user data
       } else {
-        return Failure(res.error!);
+        return Failure(data.error!);
       }
     } else {
       return Failure(res.error!);
