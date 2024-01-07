@@ -49,7 +49,11 @@ class _MainScreenPortraitState extends State<MainScreenPortrait> {
         body: SafeArea(
           child: PageView.builder(
             itemBuilder: (context, index) {
-              if (index == 0) return const BlogPage();
+              if (index == 0) {
+                return BlogPage(
+                  user: widget.user,
+                );
+              }
               if (index == 1) {
                 return CreateBlogPage(
                   user: widget.user,

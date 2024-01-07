@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:my_blog_app/core/widgets/simple_snack_bar.dart';
 import 'package:my_blog_app/domain/remote/models/auth/user_model.dart';
+import 'package:my_blog_app/domain/remote/models/blogs/blog_model.dart';
 import 'package:my_blog_app/domain/remote/models/blogs/create_blog_form.dart';
 import 'package:my_blog_app/presentation/features/blog/bloc/create_blog/create_blog_bloc.dart';
 import 'package:my_blog_app/presentation/features/blog/widget/image_selector.dart';
 
-class CreateBlogPage extends StatefulWidget {
+class EditBlogPage extends StatefulWidget {
   final UserModel user;
+  final BlogModel blog;
 
-  const CreateBlogPage({super.key, required this.user});
+  const EditBlogPage({super.key, required this.user, required this.blog});
 
   @override
-  State<CreateBlogPage> createState() => _CreateBlogPageState();
+  State<EditBlogPage> createState() => _EditBlogPageState();
 }
 
-class _CreateBlogPageState extends State<CreateBlogPage> {
+class _EditBlogPageState extends State<EditBlogPage> {
   late TextEditingController title;
   late TextEditingController body;
   late XFile? image;
@@ -25,25 +26,16 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
   void initState() {
     super.initState();
     image = null;
-    title = TextEditingController();
-    body = TextEditingController();
+    title = TextEditingController(text: widget.blog.title);
+
+    body = TextEditingController(text: widget.blog.body);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: BlocConsumer<CreateBlogBloc, CreateBlogState>(
-        listener: (context, state) {
-          if (state is BlogPostedSuccessfully) {
-            SimpleSnackBar.show(context, "blog posted");
-          }
-          if (state is BlogPostError) {
-            SimpleSnackBar.show(context, state.error);
-          }
-          if (state is BlogFormInvalid) {
-            SimpleSnackBar.show(context, state.error);
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           return MaterialButton(
             onPressed: (state is BlogPosting)
@@ -64,7 +56,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                 borderRadius: BorderRadius.all(Radius.circular(20))),
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
             child: const Text(
-              "Post",
+              "Edit",
               style: TextStyle(color: Colors.white),
             ),
           );
@@ -78,7 +70,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "Create a\nBlog",
+                  "Edit Blog",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
@@ -100,7 +92,7 @@ class _CreateBlogPageState extends State<CreateBlogPage> {
                   height: 20,
                 ),
                 ImageSelector(
-                  url: null,
+                  url: widget.blog == null ? null : widget.blog!.imageUrl,
                   onImageSelected: (p0) {
                     image = p0;
                   },

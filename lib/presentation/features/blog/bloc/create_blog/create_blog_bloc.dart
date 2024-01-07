@@ -63,7 +63,7 @@ class CreateBlogBloc extends Bloc<CreateBlogEvent, CreateBlogState> {
     if (res is Success<BlogModel>) {
       emit(BlogPostedSuccessfully(res.data));
     } else {
-      emit(BolgPostError(res.error.toString()));
+      emit(BlogPostError(res.error.toString()));
     }
   }
 }

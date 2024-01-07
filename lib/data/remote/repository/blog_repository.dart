@@ -16,4 +16,6 @@ abstract class BlogRepository {
   Future<Resource<DocumentSnapshot<BlogEntity>>> getBlog(String blogId);
 
   Future<Resource<String>> uploadImage(String id , XFile image);
+
+  Future<Resource<String>> deleteImage(String id );
 }

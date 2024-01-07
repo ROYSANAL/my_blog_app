@@ -27,8 +27,10 @@ class BlogPostedSuccessfully extends CreateBlogState {
   BlogPostedSuccessfully(this.blog);
 }
 
-class BolgPostError extends CreateBlogState {
+class BlogPostError extends CreateBlogState {
   final String error;
 
-  BolgPostError(this.error);
+  BlogPostError(this.error);
 }
+
+class BlogUpdating extends CreateBlogEvent {}

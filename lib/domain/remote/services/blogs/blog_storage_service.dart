@@ -18,4 +18,15 @@ class BlogStorageService {
       return Failure(e.toString());
     }
   }
+
+  Future<Resource<String>> deleteImage(String id) async {
+    try {
+      final task = await _storage.child(id).delete();
+      return Success(id);
+    } on FirebaseException catch (e) {
+      return Failure(e.message.toString());
+    } catch (e) {
+      return Failure(e.toString());
+    }
+  }
 }

@@ -36,4 +36,7 @@ class BlogRepositoryImplementation implements BlogRepository {
   @override
   Future<Resource<String>> uploadImage(String id, XFile image) =>
       _storage.uploadImage(id, image);
+
+  @override
+  Future<Resource<String>> deleteImage(String id) => _storage.deleteImage(id);
 }

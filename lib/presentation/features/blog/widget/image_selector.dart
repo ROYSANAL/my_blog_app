@@ -9,8 +9,9 @@ import 'package:my_blog_app/domain/remote/usecases/blogs/pick_image_usecase.dart
 
 class ImageSelector extends StatefulWidget {
   final Function(XFile?) onImageSelected;
+  final String? url;
 
-  const ImageSelector({super.key, required this.onImageSelected});
+  const ImageSelector({super.key, required this.onImageSelected, this.url});
 
   @override
   State<ImageSelector> createState() => _ImageSelectorState();
@@ -35,31 +36,42 @@ class _ImageSelectorState extends State<ImageSelector> {
       child: Container(
           width: double.infinity,
           height: 200,
-          padding: image!=null?EdgeInsets.zero:const EdgeInsets.symmetric(vertical: 30 , horizontal: 20),
+          padding: image != null
+              ? EdgeInsets.zero
+              : const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           decoration: BoxDecoration(
               border: Border.all(width: 0.5),
               borderRadius: const BorderRadius.all(Radius.circular(20))),
           child: image == null
-              ? Center(
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        Svgs.image,
-                        width: 80,
-                        height: 80,
+              ? widget.url == null
+                  ? Center(
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                            Svgs.image,
+                            width: 80,
+                            height: 80,
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          const Text(
+                            "select an image",
+                            style: TextStyle(
+                                color: Colors.deepOrange,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 8,
+                    )
+                  : ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(20),
                       ),
-                      const Text(
-                        "select an image",
-                        style: TextStyle(
-                            color: Colors.deepOrange,
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                )
+                      child: Image.network(
+                        widget.url!,
+                        fit: BoxFit.fill,
+                      ))
               : ClipRRect(
                   borderRadius: const BorderRadius.all(
                     Radius.circular(20),
